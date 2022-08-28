@@ -15,6 +15,7 @@ function App() {
   const [selectedCard, setSelectedCard] = React.useState({
     name: "",
     link: "",
+    alt: "",
   });
 
   function handleEditAvatarClick(e) {
@@ -29,15 +30,15 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
-  function handleCardClick({ name, link }) {
-    setSelectedCard({ name, link });
+  function handleCardClick({ name, link, alt }) {
+    setSelectedCard({ name, link, alt });
   }
 
   const closeAllPopups = () => {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setSelectedCard({ name: "", link: "" });
+    setSelectedCard({ name: "", link: "", alt: "" });
   };
 
   return (
@@ -110,12 +111,6 @@ function App() {
             id="url-input"
           />
         </PopupWithForm>
-        <PopupWithForm
-          name="confirm"
-          title="Вы уверены?"
-          buttonTitle="Да"
-          onClose={closeAllPopups}
-        ></PopupWithForm>
         <ImagePopup card={selectedCard} onClose={closeAllPopups} />
       </div>
     </div>

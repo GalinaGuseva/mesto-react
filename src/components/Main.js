@@ -2,9 +2,14 @@ import React from "react";
 import api from "../utils/Api.js";
 import Card from "./Card.js";
 
-export default function Main(props) {
-  const [userName, setUserName] = React.useState();
-  const [userDescription, setUserDescription] = React.useState();
+export default function Main({
+  onEditAvatar,
+  onEditProfile,
+  onAddPlace,
+  onCardClick,
+}) {
+  const [userName, setUserName] = React.useState("");
+  const [userDescription, setUserDescription] = React.useState("");
   const [userAvatar, setUserAvatar] = React.useState();
   const [cards, setCards] = React.useState([]);
 
@@ -33,7 +38,7 @@ export default function Main(props) {
           <img src={userAvatar} alt={userName} className="profile__image" />
           <button
             type="button"
-            onClick={props.onEditAvatar}
+            onClick={onEditAvatar}
             className="profile__edit-avatar-button"
           ></button>
           <div className="profile__text-block">
@@ -41,7 +46,7 @@ export default function Main(props) {
               <h1 className="profile__name">{userName}</h1>
               <button
                 type="button"
-                onClick={props.onEditProfile}
+                onClick={onEditProfile}
                 className="profile__edit-button"
                 title="Редактировать"
               ></button>
@@ -51,7 +56,7 @@ export default function Main(props) {
         </div>
         <button
           type="button"
-          onClick={props.onAddPlace}
+          onClick={onAddPlace}
           className="profile__add-button"
           title="Добавить фото"
         ></button>
@@ -67,7 +72,7 @@ export default function Main(props) {
                 link={card.link}
                 alt={card.name}
                 likes={card.likes.length}
-                onCardClick={props.onCardClick}
+                onCardClick={onCardClick}
               />
             </li>
           ))}
