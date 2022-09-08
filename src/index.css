@@ -19,7 +19,6 @@
 @import url(./blocks/photo-card/photo-card.css);
 @import url(./blocks/photo-card/__image/photo-card__image.css);
 @import url(./blocks/photo-card/__btn-delete/photo-card__btn-delete.css);
-@import url(./blocks/photo-card/__btn-delete/_hidden/photo-card__btn-delete_hidden.css);
 @import url(./blocks/photo-card/__delete/photo-card__delete.css);
 @import url(./blocks/photo-card/__delete-top/photo-card__delete-top.css);
 @import url(./blocks/photo-card/__trash/photo-card__trash.css);

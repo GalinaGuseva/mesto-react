@@ -13,7 +13,7 @@ import { CurrentUserContext } from "../contexts/CurrentUserContext";
 function App() {
   const [currentUser, setCurrentUser] = React.useState({
     name: "One moment...",
-    about: "One moment...",
+    about: "",
     avatar: "",
   });
   const [cards, setCards] = React.useState([]);
@@ -70,15 +70,15 @@ function App() {
     setIsAddPlacePopupOpen(true);
   }
 
-  function handleCardClick({ name, link, alt }) {
-    setSelectedCard({ name, link, alt });
+  function handleCardClick(card) {
+    setSelectedCard(card);
   }
 
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
-    setSelectedCard({ name: "", link: "", alt: "" });
+    setSelectedCard({ name: "", link: "" });
   }
 
   function handleUpdateUser(data) {

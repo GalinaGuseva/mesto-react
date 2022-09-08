@@ -64,8 +64,9 @@ class Api {
 
   //Постановка и снятие лайка
   toggleLikeCard(cardId, isLiked) {
+    const method = isLiked ? "PUT" : "DELETE";
     return fetch(`${this._url}/cards/likes/${cardId}`, {
-      method: isLiked ? "DELETE" : "PUT",
+      method,
       headers: this._headers,
     }).then((res) => this._getResponse(res));
   }
