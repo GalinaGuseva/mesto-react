@@ -32,10 +32,7 @@ class Api {
     return fetch(`${this._url}/users/me`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({
-        name: userData.userName,
-        about: userData.userJob,
-      }),
+      body: JSON.stringify(userData),
     }).then((res) => this._getResponse(res));
   }
 
@@ -44,9 +41,7 @@ class Api {
     return fetch(`${this._url}/users/me/avatar`, {
       method: "PATCH",
       headers: this._headers,
-      body: JSON.stringify({
-        avatar: data.avatar,
-      }),
+      body: JSON.stringify(data),
     }).then((res) => this._getResponse(res));
   }
 
@@ -55,10 +50,7 @@ class Api {
     return fetch(`${this._url}/cards`, {
       method: "POST",
       headers: this._headers,
-      body: JSON.stringify({
-        name: data.caption,
-        link: data.link,
-      }),
+      body: JSON.stringify(data),
     }).then((res) => this._getResponse(res));
   }
 
@@ -71,16 +63,9 @@ class Api {
   }
 
   //Постановка и снятие лайка
-  addLike(cardId) {
+  toggleLikeCard(cardId, isLiked) {
     return fetch(`${this._url}/cards/likes/${cardId}`, {
-      method: "PUT",
-      headers: this._headers,
-    }).then((res) => this._getResponse(res));
-  }
-
-  removeLike(cardId) {
-    return fetch(`${this._url}/cards/likes/${cardId}`, {
-      method: "DELETE",
+      method: isLiked ? "DELETE" : "PUT",
       headers: this._headers,
     }).then((res) => this._getResponse(res));
   }

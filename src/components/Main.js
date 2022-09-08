@@ -1,41 +1,27 @@
 import React from "react";
-import api from "../utils/Api.js";
-import Card from "./Card.js";
+import Card from "./Card";
+import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function Main({
+  cards,
   onEditAvatar,
   onEditProfile,
   onAddPlace,
   onCardClick,
+  onCardLike,
+  onCardDelete,
 }) {
-  const [userName, setUserName] = React.useState("");
-  const [userDescription, setUserDescription] = React.useState("");
-  const [userAvatar, setUserAvatar] = React.useState("");
-  const [cards, setCards] = React.useState([]);
-
-  React.useEffect(() => {
-    api
-      .getUserInfo()
-      .then((user) => {
-        setUserName(user.name);
-        setUserDescription(user.about);
-        setUserAvatar(user.avatar);
-      })
-      .catch((err) => console.log(err));
-  }, []);
-
-  React.useEffect(() => {
-    api
-      .getInitialCards()
-      .then((data) => setCards(data))
-      .catch((err) => console.log(err));
-  }, []);
+  const currentUser = React.useContext(CurrentUserContext);
 
   return (
     <main>
       <section className="profile">
         <div className="profile__info">
-          <img src={userAvatar} alt={userName} className="profile__image" />
+          <img
+            src={currentUser.avatar}
+            alt={currentUser.name}
+            className="profile__image"
+          />
           <button
             type="button"
             onClick={onEditAvatar}
@@ -43,7 +29,7 @@ export default function Main({
           ></button>
           <div className="profile__text-block">
             <div className="profile__text-container">
-              <h1 className="profile__name">{userName}</h1>
+              <h1 className="profile__name">{currentUser.name}</h1>
               <button
                 type="button"
                 onClick={onEditProfile}
@@ -51,7 +37,7 @@ export default function Main({
                 title="Редактировать"
               ></button>
             </div>
-            <p className="profile__job">{userDescription}</p>
+            <p className="profile__job">{currentUser.about}</p>
           </div>
         </div>
         <button
@@ -67,12 +53,10 @@ export default function Main({
           {cards.map((card) => (
             <li key={card._id}>
               <Card
-                id={card._id}
-                name={card.name}
-                link={card.link}
-                alt={card.name}
-                likes={card.likes.length}
+                card={card}
                 onCardClick={onCardClick}
+                onCardLike={onCardLike}
+                onCardDelete={onCardDelete}
               />
             </li>
           ))}
