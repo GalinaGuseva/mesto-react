@@ -1,24 +1,24 @@
 import React from "react";
 import PopupWithForm from "./PopupWithForm";
+import { useForm } from "../hooks/UseForm.js";
 import { CurrentUserContext } from "../contexts/CurrentUserContext";
 
 export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
-  const [name, setName] = React.useState("");
-  const [description, setDescription] = React.useState("");
+  const inputValues = { userName: "", userJob: "" };
+  const { values, setValues, handleChange } = useForm(inputValues);
   const currentUser = React.useContext(CurrentUserContext);
 
   React.useEffect(() => {
-    setName(currentUser.name);
-    setDescription(currentUser.about);
-  }, [currentUser]);
+    if (currentUser && isOpen) {
+      setValues({ userName: currentUser.name, userJob: currentUser.about });
+    }
+  }, [currentUser, isOpen]);
 
-  const handleNameChange = (e) => setName(e.target.value);
-  const handleDescriptionChange = (e) => setDescription(e.target.value);
   function handleSubmit(e) {
     e.preventDefault();
     onUpdateUser({
-      name,
-      about: description,
+      name: values.userName,
+      about: values.userJob,
     });
   }
 
@@ -37,8 +37,8 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         className="popup__field popup__field_top"
         name="userName"
         id="name-input"
-        value={name}
-        onChange={handleNameChange}
+        value={values.userName}
+        onChange={handleChange}
       />
       <input
         type="text"
@@ -46,8 +46,8 @@ export default function EditProfilePopup({ isOpen, onClose, onUpdateUser }) {
         className="popup__field"
         name="userJob"
         id="job-input"
-        value={description}
-        onChange={handleDescriptionChange}
+        value={values.userJob}
+        onChange={handleChange}
       />
     </PopupWithForm>
   );
