@@ -104,11 +104,37 @@ function App() {
     setSelectedCard(card);
   }
 
+  function handlePopupCloseByOverlay(e) {
+    if (e.target.classList.contains("popup")) {
+      closeAllPopups();
+    }
+  }
+
+  function handleEsc(e) {
+    if (e.key === "Escape") {
+      closeAllPopups();
+    }
+  }
+
+  React.useEffect(() => {
+    if (
+      isEditAvatarPopupOpen ||
+      isEditProfilePopupOpen ||
+      isAddPlacePopupOpen ||
+      selectedCard
+    ) {
+      document.addEventListener("keydown", handleEsc);
+      document.addEventListener("click", handlePopupCloseByOverlay);
+    }
+  });
+
   function closeAllPopups() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
     setSelectedCard({ name: "", link: "" });
+    document.removeEventListener("keydown", handleEsc);
+    document.removeEventListener("click", handlePopupCloseByOverlay);
   }
 
   return (
